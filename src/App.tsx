@@ -1,4 +1,4 @@
-import BaseMap from "./components/BaseMap";
+import BaseMap from "./containers/BaseMap/BaseMap";
 import { ErrorBoundary } from "react-error-boundary";
 
 import "./App.css";
