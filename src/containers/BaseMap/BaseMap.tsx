@@ -163,6 +163,8 @@ function BaseMap() {
       <SideBar
         handleToggleEarthquakeLayer={setShowEarthquakeLayer}
         handleToggleOutdoorLayer={setShowOutdoorLayer}
+        showEarthquakeLayer={showEarthquakeLayer}
+        showOutdoorsLayer={showOutdoorLayer}
         isMapReady={isMapReady}
       />
       <div id="map-container" ref={mapContainerRef} />

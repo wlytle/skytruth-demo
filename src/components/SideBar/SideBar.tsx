@@ -14,12 +14,16 @@ import "./sideBar.css";
 interface Props {
   handleToggleEarthquakeLayer: Dispatch<SetStateAction<boolean>>;
   handleToggleOutdoorLayer: Dispatch<SetStateAction<boolean>>;
+  showEarthquakeLayer: boolean;
+  showOutdoorsLayer: boolean;
   isMapReady: boolean;
 }
 
 function SideBar({
   handleToggleEarthquakeLayer,
   handleToggleOutdoorLayer,
+  showEarthquakeLayer,
+  showOutdoorsLayer,
   isMapReady,
 }: Props) {
   const [expanded, setExpanded] = useState<boolean>(false);
@@ -59,7 +63,9 @@ function SideBar({
         <div>
           <FormGroup>
             <FormControlLabel
-              control={<Switch disabled={!isMapReady} />}
+              control={
+                <Switch disabled={!isMapReady} checked={showEarthquakeLayer} />
+              }
               onChange={(
                 //@ts-expect-error next-line
                 { currentTarget: { checked } }, // Type error here because MUI adds `checked` to the target
@@ -67,7 +73,9 @@ function SideBar({
               label="Earthquakes"
             />
             <FormControlLabel
-              control={<Switch disabled={!isMapReady} />}
+              control={
+                <Switch disabled={!isMapReady} checked={showOutdoorsLayer} />
+              }
               onChange={(
                 //@ts-expect-error next-line
                 { currentTarget: { checked } }, // Type error here because MUI adds `checked` to the target
