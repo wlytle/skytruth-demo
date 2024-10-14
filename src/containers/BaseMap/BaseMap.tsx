@@ -19,9 +19,11 @@ function BaseMap() {
 
   const earthquakeUrl =
     "https://earthquake.usgs.gov/fdsnws/event/1/query?basicmagnitude=&minmagnitude=2.5&maxmagnitude=10&starttime=2022-01-01&endtime=2022-12-31&maxlatitude=40&minlongitude=-200&maxlongitude=0&minlatitude=30&format=geojson";
-
   const outdoorsUrl = `https://tile.thunderforest.com/outdoors/{z}/{x}/{y}.png?apikey=${import.meta.env.VITE_THUNDERFORREST_KEY}`;
+  const eqLayer = "earthquakes-layer";
+  const outdoorsLayer = "outdoors-layer"
 
+  
   const isMapDomReady = useCallback(() => {
     /**
      * isStyleLoaded() should only be needed here for local dev as a check for
@@ -89,7 +91,7 @@ function BaseMap() {
 
     if (showEarthquakeLayer) {
       mapRef.current?.addLayer({
-        id: "earthquakes-layer",
+        id: eqLayer,
         type: "circle",
         source: "earthquakes",
         paint: {
@@ -100,7 +102,7 @@ function BaseMap() {
         },
       });
 
-      mapRef.current?.on("click", "earthquakes-layer", (event) => {
+      mapRef.current?.on("click", eqLayer, (event) => {
         const innerHTML = !event?.features
           ? "<p>No data available for the this event :( </p>"
           : makePopup(event.features[0]);
@@ -109,11 +111,12 @@ function BaseMap() {
         new mapboxgl.Popup()
           .setLngLat(event.lngLat)
           .setHTML(innerHTML)
+          //isMapDomReady ensures that mapRef.current exists, so this just hides a handled potential error
           //@ts-ignore next-line
           .addTo(mapRef.current);
       });
     } else {
-      mapRef.current?.removeLayer("earthquakes-layer");
+      mapRef.current?.removeLayer(eqLayer);
     }
   }, [showEarthquakeLayer, isMapDomReady]);
 
@@ -124,12 +127,16 @@ function BaseMap() {
 
     if (showOutdoorLayer) {
       mapRef.current?.addLayer({
-        id: "outdoors-layer",
+        id: outdoorsLayer,
         type: "raster",
         source: "outdoors",
       });
+      // Ensure the earthquake markes don't get covered by the outdoor layer
+      if (mapRef.current && mapRef.current.getStyle()?.layers.filter(layer => layer.id === eqLayer)) {
+        mapRef.current.moveLayer(outdoorsLayer, eqLayer)
+      }
     } else {
-      mapRef.current?.removeLayer("outdoors-layer");
+      mapRef.current?.removeLayer(outdoorsLayer);
     }
   }, [showOutdoorLayer, isMapDomReady]);
 
