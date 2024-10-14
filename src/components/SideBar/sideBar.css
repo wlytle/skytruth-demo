@@ -1,0 +1,21 @@
+.sidebar {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  color: #fff;
+  padding: 6px 12px;
+  font-family: monospace;
+  z-index: 1;
+  position: absolute;
+  top: 0;
+  left: 0;
+  margin: 12px;
+  border-radius: 4px;
+  margin-top: 0.2em;
+}
+
+.sidebar-contents {
+  display: flex;
+  background-color: rgb(35 55 75 / 90%);
+  padding: 0.6em;
+}
