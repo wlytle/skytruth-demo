@@ -6,7 +6,7 @@ import "./App.css";
 function App() {
   return (
     <>
-      <ErrorBoundary fallback={<p>⚠️Something went wrong</p>}>
+      <ErrorBoundary fallback={<p>Something went wrong!! Don't panic, it'll be okay!</p>}>
         <BaseMap />
       </ErrorBoundary>
     </>
