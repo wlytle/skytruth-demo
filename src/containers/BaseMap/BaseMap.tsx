@@ -39,10 +39,10 @@ function BaseMap() {
     const setReady = () => setIsMapReady(true);
     // Load the initial map
     if (mapContainerRef.current) {
-      console.log("implement?");
       mapboxgl.accessToken = import.meta.env.VITE_MAPBOX_KEY;
       mapRef.current = new mapboxgl.Map({
         container: mapContainerRef.current,
+        style: "mapbox://styles/mapbox/satellite-v9",
         center: [-101, 38],
         zoom: 4,
       });
@@ -58,15 +58,16 @@ function BaseMap() {
 
   useEffect(() => {
     if (isMapDomReady()) {
-      console.log("adding stuff");
       // Once the map is ready add the sources for the layer options
       mapRef.current?.addSource("outdoors", {
         type: "raster",
         tiles: [outdoorsUrl],
+        attribution: "<a href='https://www.thunderforest.com/'>© Thunderforest</a>",
       });
       mapRef.current?.addSource("earthquakes", {
         type: "geojson",
         data: earthquakeUrl,
+        attribution: "<a href='https://earthquake.usgs.gov/fdsnws/event/1/'>USGS</a>"
       });
     }
 
@@ -108,6 +109,7 @@ function BaseMap() {
         new mapboxgl.Popup()
           .setLngLat(event.lngLat)
           .setHTML(innerHTML)
+          //@ts-ignore next-line
           .addTo(mapRef.current);
       });
     } else {

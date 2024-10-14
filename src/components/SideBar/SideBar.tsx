@@ -38,7 +38,7 @@ function SideBar({
     : () => (
         <Button
           variant="contained"
-          sx={{ bgcolor: "white", color: "black", p: "0, 2.9em" }}
+          sx={{ bgcolor: "white", color: "black", padding: "0 2.9em" }}
           onClick={() => setExpanded(!expanded)}
           startIcon={<LayersIcon />}
         >
@@ -60,14 +60,14 @@ function SideBar({
           <FormGroup>
             <FormControlLabel
               control={<Switch disabled={!isMapReady} />}
-              onChange={({ currentTarget: { checked } }) =>
+              onChange={({ currentTarget: { checked } }) => // Type error here because MUI adds `checked` to the target
                 handleToggleEarthquakeLayer(checked)
               }
               label="Earthquakes"
             />
             <FormControlLabel
               control={<Switch disabled={!isMapReady} />}
-              onChange={({ currentTarget: { checked } }) =>
+              onChange={({ currentTarget: { checked } }) => // Type error here because MUI adds `checked` to the target
                 handleToggleOutdoorLayer(checked)
               }
               label="Outdoors"
