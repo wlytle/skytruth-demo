@@ -61,6 +61,7 @@ function SideBar({
             <FormControlLabel
               control={<Switch disabled={!isMapReady} />}
               onChange={(
+                //@ts-expect-error next-line
                 { currentTarget: { checked } }, // Type error here because MUI adds `checked` to the target
               ) => handleToggleEarthquakeLayer(checked)}
               label="Earthquakes"
@@ -68,6 +69,7 @@ function SideBar({
             <FormControlLabel
               control={<Switch disabled={!isMapReady} />}
               onChange={(
+                //@ts-expect-error next-line
                 { currentTarget: { checked } }, // Type error here because MUI adds `checked` to the target
               ) => handleToggleOutdoorLayer(checked)}
               label="Outdoors"

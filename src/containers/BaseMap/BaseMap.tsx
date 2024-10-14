@@ -113,7 +113,7 @@ function BaseMap() {
           .setLngLat(event.lngLat)
           .setHTML(innerHTML)
           //isMapDomReady ensures that mapRef.current exists, so this just hides a handled potential error
-          //@ts-ignore next-line
+          //@ts-expect-error next-line
           .addTo(mapRef.current);
       });
     } else {
@@ -133,12 +133,10 @@ function BaseMap() {
         source: "outdoors",
       });
       // Ensure the earthquake markes don't get covered by the outdoor layer
-      if (
-        mapRef.current &&
-        mapRef.current
-          .getStyle()
-          ?.layers.filter((layer) => layer.id === eqLayer)
-      ) {
+      const earthquakeLayers = mapRef.current
+        ?.getStyle()
+        ?.layers.filter((layer) => layer.id === eqLayer);
+      if (mapRef.current && earthquakeLayers && earthquakeLayers.length > 0) {
         mapRef.current.moveLayer(outdoorsLayer, eqLayer);
       }
     } else {
